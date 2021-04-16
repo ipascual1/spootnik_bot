@@ -29,6 +29,11 @@ bot = commands.Bot(command_prefix="--", help_command=None)
 
 @bot.command()
 async def alive(ctx):
+    """
+        ctx: Context object
+    
+    Checks if Minecraft Server is alive
+    """
     if check_alive():
         await ctx.send("El servidor de Minecraft está operativo, mi pana.")
     else:
@@ -38,6 +43,11 @@ async def alive(ctx):
 @bot.command()
 @commands.has_role("MAINCRAA")
 async def extend(ctx):
+    """
+        ctx: Context object
+    
+    Sets timer to close the Minecraft server in 30 minutes. Useful to extend.
+    """
     if not check_alive():
         await ctx.send("El servidor de Minecraft está jodío, mi pana.")
     else:
@@ -49,6 +59,11 @@ async def extend(ctx):
 @bot.command()
 @commands.has_role("MAINCRAA")
 async def stop(ctx):
+    """
+        ctx: Context object.
+    
+    Closes the Minecraft Server.
+    """
     if not check_alive():
         await ctx.send("El servidor de Minecraft está jodío, mi pana.")
     else:
@@ -59,6 +74,9 @@ async def stop(ctx):
 
 @bot.event
 async def on_connect():
+    """
+    Warns that Minecraft Server is up (initiates with bot)
+    """
     role = discord.utils.get(bot.get_guild(
         SUGAR_SRV_ID).roles, id=MAINCRA_ROLE_ID)
     await bot.get_channel(MAINCRA_CHN_ID).send("MAINCRA ABIERTO JENTE {0.mention}".format(role))
@@ -66,6 +84,11 @@ async def on_connect():
 
 @bot.event
 async def on_message(message):
+    """
+        message: Message object.
+    
+    Processes commands. Then throws a random fact (10%) and if that message was "a." answers the same.
+    """
     if message.author == bot.user:
         return
     await bot.process_commands(message)
@@ -74,27 +97,41 @@ async def on_message(message):
         await message.channel.send("Hey, {0.author.mention}, did you know that ".format(message) + random_fact())
 
     if message.content == "a.":
+        # Easter egg. 5%.
         if randrange(20) == 13:
             await message.channel.send("Papopepoparapapapapa")
-
         else:
             await message.channel.send("a.")
 
 
 @bot.event
 async def on_command_error(ctx, error):
+    """
+        ctx: Context object
+        error: Error object
+    
+    Warns the user that he hasn't the role required.
+    """
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send("ESE COMANDO. NO PODÉS.\n\n(no tienes el rol adecuado).")
 
 
 @bot.event
 async def on_ready():
+    """
+    Changes the bot activity.
+    """
     await bot.change_presence(activity=Game(name="--help"))
     print("Spootnik launched.")
 
 
 @bot.command()
 async def help(ctx):
+    """
+        ctx: Context object.
+    
+    Pootin.
+    """
     await ctx.send("Pootin estará esperando en tus MDs...")
     await ctx.author.create_dm()
     await ctx.author.dm_channel.send(
