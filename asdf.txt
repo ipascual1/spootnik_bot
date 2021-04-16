@@ -1,0 +1,10 @@
+● spootnik.service - Spootnik Bot
+     Loaded: loaded (/lib/systemd/system/spootnik.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2021-04-14 22:29:03 CEST; 1min 56s ago
+   Main PID: 6589 (python3)
+      Tasks: 3 (limit: 4510)
+     Memory: 27.9M
+     CGroup: /system.slice/spootnik.service
+             └─6589 /usr/bin/python3 /home/ivanska/spootnik_bot/spootnik.py
+
+Apr 14 22:29:03 sputnik systemd[1]: Started Spootnik Bot.
